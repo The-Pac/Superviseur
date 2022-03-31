@@ -4,11 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -24,10 +21,12 @@ public class MainApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), screenBounds.getWidth() - 40, screenBounds.getHeight() - 40);
         stage.setTitle("Superviseur");
         stage.setScene(scene);
-        scene.setFill(Color.TRANSPARENT);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.getIcons().add(new Image("logo_icon.png"));
         stage.show();
-        stage.setX(30);
+        stage.setX(20);
+        stage.setY(20);
+
+
+        MainController.setWidth(screenBounds.getWidth());
+        MainController.setHeight(screenBounds.getHeight());
     }
 }
