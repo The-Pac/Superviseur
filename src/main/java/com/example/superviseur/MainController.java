@@ -1,110 +1,80 @@
 package com.example.superviseur;
 
-import com.example.superviseur.classe.Robot;
-import com.example.superviseur.classe.WebService;
+import com.example.superviseur.classe.Package;
+import com.example.superviseur.classe.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     //variable
-    public WebService webService = new WebService();
+    public WebService webService;
+    public Map carte;
 
     @FXML
     public TabPane main_TabPane;
-    public Tab home_Tab, livraison_Tab, robots_Tab, paquet_Tab, carte_Tab;
-    public AnchorPane home_AnchorPane, livraison_AnchorPane, robots_AnchorPane, paquets_AnchorPane, carte_AnchorPane;
-    public Button ajouter_robot_Button;
-    public TextField identifiant_robot_TextField;
-    public TableView<String> livraisons_TabView, robots_TabView, paquets_TabView;
+    public Tab home_Tab, delivery_Tab, robots_Tab, package_Tab, map_Tab;
+    public AnchorPane home_AnchorPane, delivery_AnchorPane, robots_AnchorPane, packages_AnchorPane, map_AnchorPane;
+    public Button add_robot_Button, add_package_Button;
+    public TextField id_robot_TextField;
+    public TableView<Robot> robots_TabView;
+    public TableView<Delivery> deliveries_TabView;
+    public TableView<Package> packages_TabView;
+
+    //robot columns
+    public TableColumn<Robot, String> nom_robot_TableColumn;
+    public TableColumn<Robot, Circle> statut_robot_TableColumn;
+
+    //delivery columns
+    public TableColumn<Delivery, String> address_delivery_TableColumn, date_livrer_delivery_TableColumn;
+    public TableColumn<Delivery, Circle> statut_delivery_TableColumn;
+
+    //paquet columns
+    public TableColumn<Package, String> id_package_TableColumn, address_package_TableColumn, date_arriver_package_TableColumn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //init
+        webService = new WebService();
+        carte = new Map();
+
+        //set tablecolumn
+        //nom_robot_TableColumn.setCellValueFactory(new PropertyValueFactory<>("identifiant"));
+        //statut_robot_TableColumn.setCellValueFactory(new PropertyValueFactory<>("statut"));
+
+        //listener on tabpane
         main_TabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             switch (observable.getValue().getText().toLowerCase()) {
-                case "paquets":
-                    break;
                 case "home":
                     break;
-                case "livraisons":
+                case "paquets":
+                    break;
+                case "deliverys":
                     break;
                 case "carte":
-                    //init
-                    GridPane carte_gridpane = new GridPane();
-
-                    //style
-                    carte_gridpane.setGridLinesVisible(true);
-                    carte_gridpane.getStyleClass().add("carte_gridpane");
-                    carte_gridpane.setAlignment(Pos.CENTER);
-                    carte_gridpane.setHgap(1);
-                    carte_gridpane.setVgap(1);
-                    carte_gridpane.setTranslateX(50);
-                    carte_gridpane.setTranslateY(50);
-                    carte_gridpane.setPrefSize(carte_AnchorPane.getWidth() - 50, carte_AnchorPane.getHeight() - 50);
-
-
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 3; j++) {
-                            AnchorPane anchorPane = new AnchorPane();
-                            Button top_button = new Button("" + i), bottom_button = new Button("" + i),
-                                    right_button = new Button("" + i), left_button = new Button("" + i);
-                            //style
-                            top_button.setMinWidth(10);
-                            bottom_button.setMinWidth(10);
-                            right_button.setMinWidth(10);
-                            left_button.setMinWidth(10);
-
-
-                            anchorPane.setMinSize(100,100);
-                            //top
-                            anchorPane.getChildren().add(top_button);
-                            //bottom
-                            anchorPane.getChildren().add(bottom_button);
-                            //right
-                            anchorPane.getChildren().add(right_button);
-                            //left
-                            anchorPane.getChildren().add(left_button);
-
-
-                            top_button.setLayoutX(anchorPane.getWidth() / 2);
-                            top_button.setLayoutY(anchorPane.getHeight());
-
-                            bottom_button.setLayoutX(anchorPane.getWidth() / 2);
-                            bottom_button.setLayoutY(-anchorPane.getHeight());
-
-                            right_button.setLayoutX(anchorPane.getWidth());
-                            right_button.setLayoutY(0);
-
-                            left_button.setLayoutX(-anchorPane.getWidth());
-                            left_button.setLayoutY(0);
-
-                            carte_gridpane.add(anchorPane, i, j);
-                        }
-                    }
-
-
-                    carte_AnchorPane.getChildren().add(carte_gridpane);
+                    map_AnchorPane.getChildren().add(carte.display(map_AnchorPane));
                     break;
                 case "robots":
-                    ArrayList<Robot> robots = new ArrayList<>();
+                    ObservableList<Robot> robots = FXCollections.observableArrayList();
                     for (int i = 0; i < 5; i++) {
                         robots.add(new Robot("raoul" + i, "pret"));
                     }
 
+
                     //graphique
-
-
-                    for (Robot robot : robots) {
-
-                    }
+                    robots_TabView.setItems(robots);
+                    robots_TabView.refresh();
                     break;
                 default:
                     break;
@@ -112,6 +82,66 @@ public class MainController implements Initializable {
         });
     }
 
-    public void ajouter_robot_Button_Action(ActionEvent actionEvent) {
+    public void add_robot_Button_Action(ActionEvent actionEvent) {
+    }
+
+    public void add_package_Button_Action(ActionEvent actionEvent) {
+        //init
+        Tab add_paquet_tab = new Tab("Ajouter paquet");
+        AnchorPane add_paquet_Anchorpane = new AnchorPane();
+        TextField identifiant_paquet_Textfield = new TextField("Identifiant du paquet");
+        HBox hBox_button = new HBox();
+        VBox vBox = new VBox();
+        ScrollPane carte_scrollpane = carte.display(add_paquet_Anchorpane);
+        Button ajouter_paquet_Button = new Button("Ajouter paquet");
+        Button annuler_paquet_Button = new Button("Annuler");
+
+        //style
+        add_paquet_Anchorpane.setMinSize(packages_AnchorPane.getWidth(), packages_AnchorPane.getHeight());
+
+        carte_scrollpane.setFitToHeight(true);
+        carte_scrollpane.setFitToWidth(true);
+
+
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setMaxWidth(200);
+        vBox.setSpacing(20);
+
+        identifiant_paquet_Textfield.setMinWidth(200);
+        identifiant_paquet_Textfield.setMaxWidth(200);
+
+        hBox_button.setMaxWidth(200);
+        hBox_button.setAlignment(Pos.CENTER);
+        hBox_button.setSpacing(20);
+
+        AnchorPane.setTopAnchor(carte_scrollpane, 50.0);
+        AnchorPane.setBottomAnchor(carte_scrollpane, 100.0);
+        AnchorPane.setRightAnchor(carte_scrollpane, 50.0);
+        AnchorPane.setLeftAnchor(carte_scrollpane, 50.0);
+
+        AnchorPane.setLeftAnchor(vBox, 50.0);
+        AnchorPane.setRightAnchor(vBox, 50.0);
+        AnchorPane.setBottomAnchor(vBox, 20.0);
+
+        //event
+        ajouter_paquet_Button.setOnAction(event -> {
+            main_TabPane.getTabs().remove(add_paquet_tab);
+            main_TabPane.getSelectionModel().selectFirst();
+        });
+
+        annuler_paquet_Button.setOnAction(event -> {
+            main_TabPane.getTabs().remove(add_paquet_tab);
+            main_TabPane.getSelectionModel().selectFirst();
+        });
+
+        //add
+        hBox_button.getChildren().addAll(ajouter_paquet_Button, annuler_paquet_Button);
+        vBox.getChildren().addAll(identifiant_paquet_Textfield, hBox_button);
+        vBox.setTranslateX(add_paquet_Anchorpane.getWidth() / 2);
+        vBox.setTranslateY(add_paquet_Anchorpane.getHeight() / 2);
+        add_paquet_Anchorpane.getChildren().addAll(carte_scrollpane, vBox);
+        add_paquet_tab.setContent(add_paquet_Anchorpane);
+        main_TabPane.getTabs().add(add_paquet_tab);
+        main_TabPane.getSelectionModel().selectLast();
     }
 }
