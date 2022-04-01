@@ -25,8 +25,5 @@ public class MainApplication extends Application {
         stage.setX(20);
         stage.setY(20);
 
-
-        MainController.setWidth(screenBounds.getWidth());
-        MainController.setHeight(screenBounds.getHeight());
     }
 }
