@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="1000.0" stylesheets="@css/main.css" xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.superviseur.MainController">
+    <children>
+        <TabPane fx:id="main_TabPane" layoutX="60.0" layoutY="25.0" prefHeight="200.0" prefWidth="200.0"
+                 tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <tabs>
+                <Tab fx:id="home_Tab" closable="false" text="Home">
+                    <content>
+                        <AnchorPane fx:id="home_AnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                                    prefWidth="200.0"/>
+                    </content>
+                </Tab>
+                <Tab fx:id="delivery_Tab" closable="false" text="Livraisons">
+                    <content>
+                        <AnchorPane fx:id="delivery_AnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                                    prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="deliveries_TabView" layoutX="43.0" layoutY="50.0" prefHeight="200.0"
+                                           prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0"
+                                           AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+                                    <columns>
+                                        <TableColumn prefWidth="75.0" text="Robot"/>
+                                        <TableColumn prefWidth="75.0" text="package"/>
+                                        <TableColumn fx:id="address_delivery_TableColumn" prefWidth="75.0"
+                                                     text="address"/>
+                                        <TableColumn fx:id="date_livrer_delivery_TableColumn" prefWidth="75.0"
+                                                     text="Date livrer"/>
+                                        <TableColumn fx:id="statut_delivery_TableColumn" prefWidth="75.0"
+                                                     text="Statut"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab fx:id="robots_Tab" closable="false" text="Robots">
+                    <content>
+                        <AnchorPane fx:id="robots_AnchorPane" maxHeight="1.7976931348623157E308"
+                                    maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
+                                    prefWidth="994.0">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </padding>
+                            <children>
+                                <HBox alignment="CENTER" layoutX="60.0" layoutY="414.0" prefHeight="150.0"
+                                      prefWidth="900.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="55.0"
+                                      AnchorPane.rightAnchor="55.0">
+                                    <children>
+                                        <GridPane hgap="5.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="95.0"
+                                                                   minWidth="10.0" prefWidth="65.0"/>
+                                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                                   maxWidth="146.0" minWidth="10.0" prefWidth="135.0"/>
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                            </rowConstraints>
+                                            <children>
+                                                <Label text="id:"/>
+                                                <TextField fx:id="id_robot_TextField"
+                                                           GridPane.columnIndex="1"/>
+                                                <Button fx:id="add_robot_Button" maxWidth="1.7976931348623157E308"
+                                                        mnemonicParsing="false" onAction="#add_robot_Button_Action"
+                                                        text="add" textAlignment="JUSTIFY" GridPane.columnIndex="1"
+                                                        GridPane.rowIndex="1">
+                                                    <font>
+                                                        <Font size="15.0"/>
+                                                    </font>
+                                                </Button>
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </HBox>
+                                <TableView fx:id="robots_TabView" layoutX="319.0" layoutY="139.0" prefHeight="200.0"
+                                           prefWidth="200.0" AnchorPane.bottomAnchor="200.0"
+                                           AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"
+                                           AnchorPane.topAnchor="50.0">
+                                    <columns>
+                                        <TableColumn fx:id="nom_robot_TableColumn" prefWidth="75.0" text="Nom"/>
+                                        <TableColumn fx:id="statut_robot_TableColumn" prefWidth="75.0" text="Statut"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab fx:id="package_Tab" closable="false" text="Paquets">
+                    <content>
+                        <AnchorPane fx:id="packages_AnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                                    prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="packages_TabView" layoutX="464.0" layoutY="186.0" prefHeight="200.0"
+                                           prefWidth="200.0" AnchorPane.bottomAnchor="200.0"
+                                           AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"
+                                           AnchorPane.topAnchor="50.0">
+                                    <columns>
+                                        <TableColumn fx:id="id_package_TableColumn" prefWidth="75.0"
+                                                     text="id"/>
+                                        <TableColumn fx:id="address_package_TableColumn" prefWidth="75.0"
+                                                     text="address"/>
+                                        <TableColumn fx:id="date_arriver_package_TableColumn" prefWidth="106.0"
+                                                     text="Date d'arriver"/>
+                                    </columns>
+                                </TableView>
+                                <HBox layoutX="400.0" layoutY="419.0" prefHeight="150.0" prefWidth="200.0"
+                                      AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="50.0"
+                                      AnchorPane.rightAnchor="50.0">
+                                    <children>
+                                        <HBox alignment="CENTER" prefHeight="150.0" prefWidth="900.0">
+                                            <children>
+                                                <GridPane hgap="5.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                                           maxWidth="146.0" minWidth="10.0"
+                                                                           prefWidth="135.0"/>
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                        vgrow="SOMETIMES"/>
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <Button fx:id="add_package_Button"
+                                                                maxWidth="1.7976931348623157E308"
+                                                                mnemonicParsing="false"
+                                                                onAction="#add_package_Button_Action" text="add"
+                                                                textAlignment="JUSTIFY">
+                                                            <font>
+                                                                <Font size="15.0"/>
+                                                            </font>
+                                                        </Button>
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab fx:id="map_Tab" closable="false" text="Carte">
+                    <content>
+                        <AnchorPane fx:id="map_AnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                                    prefWidth="200.0"/>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>
