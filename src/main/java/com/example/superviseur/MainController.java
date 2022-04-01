@@ -26,7 +26,7 @@ public class MainController implements Initializable {
     public TabPane main_TabPane;
     public Tab home_Tab, delivery_Tab, robots_Tab, package_Tab, map_Tab;
     public AnchorPane home_AnchorPane, delivery_AnchorPane, robots_AnchorPane, packages_AnchorPane, map_AnchorPane;
-    public Button add_robot_Button, add_package_Button;
+    public Button add_robot_Button, add_package_Button, close_Button;
     public TextField id_robot_TextField;
     public TableView<Robot> robots_TabView;
     public TableView<Delivery> deliveries_TabView;
@@ -37,7 +37,7 @@ public class MainController implements Initializable {
     public TableColumn<Robot, Circle> statut_robot_TableColumn;
 
     //delivery columns
-    public TableColumn<Delivery, String> address_delivery_TableColumn, date_livrer_delivery_TableColumn;
+    public TableColumn<Delivery, String> address_delivery_TableColumn, date_delivery_TableColumn;
     public TableColumn<Delivery, Circle> statut_delivery_TableColumn;
 
     //paquet columns
@@ -53,6 +53,10 @@ public class MainController implements Initializable {
         //nom_robot_TableColumn.setCellValueFactory(new PropertyValueFactory<>("identifiant"));
         //statut_robot_TableColumn.setCellValueFactory(new PropertyValueFactory<>("statut"));
 
+        //style
+        home_AnchorPane.setStyle("-fx-background-image: url('background.png');-fx-background-position: center;-fx-background-size: stretch");
+
+
         //listener on tabpane
         main_TabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             switch (observable.getValue().getText().toLowerCase()) {
@@ -60,7 +64,7 @@ public class MainController implements Initializable {
                     break;
                 case "paquets":
                     break;
-                case "deliverys":
+                case "livraisons":
                     break;
                 case "carte":
                     map_AnchorPane.getChildren().add(carte.display(map_AnchorPane));
@@ -83,6 +87,11 @@ public class MainController implements Initializable {
     }
 
     public void add_robot_Button_Action(ActionEvent actionEvent) {
+        if (!id_robot_TextField.getText().isEmpty() && !id_robot_TextField.getText().isBlank()) {
+
+        } else {
+            id_robot_TextField.setStyle("-fx-background-color: rgba(255,0,0,0.32)");
+        }
     }
 
     public void add_package_Button_Action(ActionEvent actionEvent) {
@@ -97,6 +106,7 @@ public class MainController implements Initializable {
         Button annuler_paquet_Button = new Button("Annuler");
 
         //style
+        add_paquet_Anchorpane.getStyleClass().add("anchor_content");
         add_paquet_Anchorpane.setMinSize(packages_AnchorPane.getWidth(), packages_AnchorPane.getHeight());
 
         carte_scrollpane.setFitToHeight(true);
@@ -143,5 +153,28 @@ public class MainController implements Initializable {
         add_paquet_tab.setContent(add_paquet_Anchorpane);
         main_TabPane.getTabs().add(add_paquet_tab);
         main_TabPane.getSelectionModel().selectLast();
+    }
+
+    public void close_Button_Action(ActionEvent actionEvent) {
+        System.exit(0);
+    }
+
+    public void redirect_tab_Action(ActionEvent actionEvent) {
+        switch (((Button) actionEvent.getSource()).getText().toLowerCase()) {
+            case "livraisons":
+                main_TabPane.getSelectionModel().select(delivery_Tab);
+                break;
+            case "robots":
+                main_TabPane.getSelectionModel().select(robots_Tab);
+                break;
+            case "paquets":
+                main_TabPane.getSelectionModel().select(package_Tab);
+                break;
+            case "carte":
+                main_TabPane.getSelectionModel().select(map_Tab);
+                break;
+            default:
+                break;
+        }
     }
 }

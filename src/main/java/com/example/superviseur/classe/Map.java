@@ -36,13 +36,18 @@ public class Map {
         carte_gridpane.setTranslateY(50);
         carte_gridpane.setPrefSize(map_AnchorPane.getWidth() - 50, map_AnchorPane.getHeight() - 50);
 
-        int size = 10, house_size_icon = 20;
+        int size = 4, house_size_icon = 20;
 
         for (int y = 0; y < size * 2; y += 2) {
             for (int x = 0; x < size * 2; x += 2) {
                 AnchorPane anchorPane = new AnchorPane();
                 Button top_button = new Button("" + y), bottom_button = new Button("" + y), right_button = new Button("" + y), left_button = new Button("" + y);
                 //style
+                top_button.getStyleClass().add("district_button");
+                bottom_button.getStyleClass().add("district_button");
+                right_button.getStyleClass().add("district_button");
+                left_button.getStyleClass().add("district_button");
+
                 top_button.setMinWidth(house_size_icon);
                 bottom_button.setMinWidth(house_size_icon);
                 right_button.setMinWidth(house_size_icon);
@@ -97,14 +102,14 @@ public class Map {
 
                 if (x + 1 < (size * 2) - 1) {
                     //right line
-                    Rectangle rectangle = new Rectangle(100, 25, Color.RED);
+                    Rectangle rectangle = new Rectangle(100, 25, Color.GRAY);
                     carte_gridpane.add(rectangle, x + 1, y);
                     GridPane.setValignment(rectangle, VPos.CENTER);
                     GridPane.setHalignment(rectangle, HPos.CENTER);
                 }
                 if (y + 1 < (size * 2) - 1) {
                     //bottom line
-                    Rectangle rectangle = new Rectangle(25, 100, Color.RED);
+                    Rectangle rectangle = new Rectangle(25, 100, Color.GRAY);
                     carte_gridpane.add(rectangle, x, y + 1);
                     GridPane.setValignment(rectangle, VPos.CENTER);
                     GridPane.setHalignment(rectangle, HPos.CENTER);
@@ -119,7 +124,7 @@ public class Map {
         }
         //ajouter la poste
         //bottom line
-        Rectangle rectangle = new Rectangle(25, 100, Color.RED);
+        Rectangle rectangle = new Rectangle(25, 100, Color.GRAY);
         carte_gridpane.add(rectangle, 0, carte_gridpane.getRowCount());
         GridPane.setValignment(rectangle, VPos.CENTER);
         GridPane.setHalignment(rectangle, HPos.CENTER);
