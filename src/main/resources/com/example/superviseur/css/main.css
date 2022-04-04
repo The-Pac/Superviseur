@@ -7,17 +7,20 @@
 }
 
 .tab-pane > .tab-header-area {
-    -fx-padding: 5;
+    -fx-padding: 3;
 }
 
 
 .tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-font-family: "Rubik";
+    -fx-font-size: 22;
     -fx-border-width: 2;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-border-color: #0554F2;
     -fx-start-margin: 10;
     -fx-background-color: #E9EFF2;
+    -fx-padding: 5;
 }
 
 
@@ -30,10 +33,21 @@
 }
 
 TextField {
+    -fx-font-family: "Rubik";
+    -fx-font-size: 22;
     -fx-background-color: #77ACF2;
 }
 
+.button_default {
+    -fx-font-family: "Rubik";
+    -fx-font-size: 22;
+    -fx-background-color: #0554F2;
+    -fx-text-fill: white;
+}
+
 .close_button {
+    -fx-font-family: "Rubik";
+    -fx-font-size: 18;
     -fx-background-color: red;
 }
 
@@ -44,6 +58,8 @@ TextField {
 }
 
 .district_button {
+    -fx-font-family: "Rubik";
+    -fx-font-size: 12;
     -fx-background-color: linear-gradient(to bottom, #540000, #cecece);
 }
 

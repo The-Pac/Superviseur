@@ -9,9 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 
 import java.net.URL;
@@ -54,8 +52,7 @@ public class MainController implements Initializable {
         //statut_robot_TableColumn.setCellValueFactory(new PropertyValueFactory<>("statut"));
 
         //style
-        home_AnchorPane.setStyle("-fx-background-image: url('background.png');-fx-background-position: center;-fx-background-size: stretch");
-
+        home_AnchorPane.setStyle("-fx-background-image: url('background.png');-fx-background-position: top-center;-fx-background-size:contain;-fx-background-repeat: no-repeat");
 
         //listener on tabpane
         main_TabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
