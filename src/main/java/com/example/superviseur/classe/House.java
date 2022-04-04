@@ -3,13 +3,13 @@ package com.example.superviseur.classe;
 public class House {
 
     private String id;
-    private int number;
-    private double[] position;
+    private int number, x, y;
 
-    public House(String id, int number, double[] position) {
+    public House(String id, int number, int x, int y) {
         this.id = id;
         this.number = number;
-        this.position = position;
+        this.x = x;
+        this.y = y;
     }
 
     public String getId() {
@@ -28,11 +28,19 @@ public class House {
         this.number = number;
     }
 
-    public double[] getPosition() {
-        return position;
+    public int getX() {
+        return x;
     }
 
-    public void setPosition(double[] position) {
-        this.position = position;
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

@@ -1,6 +1,52 @@
-.carte_gridpane {
+.map_gridpane {
 
 }
-.carte_gridpane Line {
-  -fx-stroke-width: 10;
+
+.tab-pane *.tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab-pane > .tab-header-area {
+    -fx-padding: 5;
+}
+
+
+.tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: #0554F2;
+    -fx-start-margin: 10;
+    -fx-background-color: #E9EFF2;
+}
+
+
+.anchor_content {
+    -fx-border-width: 3;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: #0554F2;
+    -fx-background-color: #E9EFF2;
+}
+
+TextField {
+    -fx-background-color: #77ACF2;
+}
+
+.close_button {
+    -fx-background-color: red;
+}
+
+.background_home {
+    -fx-background-image: url("background.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
+
+.district_button {
+    -fx-background-color: linear-gradient(to bottom, #540000, #cecece);
+
+}
+
+.tabpane_main {
 }

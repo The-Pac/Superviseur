@@ -2,12 +2,13 @@ package com.example.superviseur.classe;
 
 public class Intersection {
     private String id;
-    private Double[] position;
+    private int x, y;
     private House[] houses;
 
-    public Intersection(String id, Double[] position) {
+    public Intersection(String id, int x, int y) {
         this.id = id;
-        this.position = position;
+        this.x = x;
+        this.y = y;
     }
 
     public void get_intersection() {
@@ -23,12 +24,20 @@ public class Intersection {
         this.id = id;
     }
 
-    public Double[] getPosition() {
-        return position;
+    public int getX() {
+        return x;
     }
 
-    public void setPosition(Double[] position) {
-        this.position = position;
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public House[] getHouses() {
