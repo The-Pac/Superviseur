@@ -5,6 +5,7 @@ import com.example.superviseur.classe.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,19 +18,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.StringConverter;
 
+import javax.json.Json;
+import javax.json.JsonObject;
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    public static ObservableList<Robot> robots_list;
+    //const
+    public static final String ADDRESS = "http://10.3.1.235:8000/";
+    public static final int TIMEOUT = 15;
+
     //variable
+    public static ObservableList<Robot> robots_list;
+    public static String selected_house;
     public WebService webService;
-    public Map carte;
+    public Map map;
+
     @FXML
     public TabPane main_TabPane;
-    public Tab home_Tab, delivery_Tab, robots_Tab, package_Tab, map_Tab;
-    public AnchorPane home_AnchorPane, delivery_AnchorPane, robots_AnchorPane, packages_AnchorPane, map_AnchorPane;
+    public Tab home_Tab, delivery_Tab, robots_Tab, package_Tab, map_Tab, admin_Tab;
+    public AnchorPane home_AnchorPane, delivery_AnchorPane, robots_AnchorPane, packages_AnchorPane, map_AnchorPane, admin_AnchorPane;
     public Button add_robot_Button, add_package_Button, close_Button;
     public TextField id_robot_TextField;
     public TableView<Robot> robots_TabView;
@@ -53,28 +61,37 @@ public class MainController implements Initializable {
         return robots_list;
     }
 
+    public static void setRobots_list(ObservableList<Robot> robots_list) {
+        MainController.robots_list = robots_list;
+    }
+
+    public static String getSelected_house() {
+        return selected_house;
+    }
+
+    public static void setSelected_house(String selected_house) {
+        MainController.selected_house = selected_house;
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //init
         webService = new WebService();
-        carte = new Map();
+        map = new Map();
+
+        //new Thread(refresh_thread()).start();
 
         //TODO for each robots add to observableArrayList
         robots_list = FXCollections.observableArrayList();
-        Random random = new Random();
-        String s;
         for (int i = 0; i < 15; i++) {
-            if (random.nextBoolean()) {
-                s = "pret";
-            } else {
-                s = "en course";
-            }
 
-            robots_list.add(new Robot("raoul" + i, s, random.nextInt(4), random.nextInt(4)));
+            robots_list.add(new Robot("raoul" + i, "pret", 0, 0));
         }
 
         robot_ComboBox.valueProperty().addListener(observable -> {
-            System.out.println(observable);
+            //System.out.println(observable);
+
         });
 
 
@@ -95,7 +112,7 @@ public class MainController implements Initializable {
 
 
         //style
-        home_AnchorPane.setStyle("-fx-background-image: url('background.png');-fx-background-repeat:no-repeat;-fx-background-position: top-center;-fx-background-size: contain,auto");
+        home_AnchorPane.setStyle("-fx-background-image: url('background.png');-fx-background-repeat:no-repeat;-fx-background-position: top-center;-fx-background-size: contain");
 
 
         //listener on tabpane
@@ -109,7 +126,7 @@ public class MainController implements Initializable {
                     break;
                 case "carte":
                     robot_ComboBox.setItems(robots_list);
-                    robot_ComboBox.setConverter(new StringConverter<Robot>() {
+                    robot_ComboBox.setConverter(new StringConverter<>() {
                         @Override
                         public String toString(Robot object) {
                             return object.getId();
@@ -123,13 +140,17 @@ public class MainController implements Initializable {
                     robot_ComboBox.getSelectionModel().selectFirst();
 
                     //graphic
-                    map_AnchorPane.getChildren().add(carte.display_map(true));
+                    map_AnchorPane.getChildren().add(map.display_map(true, false));
                     break;
                 case "robots":
                     //graphic
                     robots_TabView.getItems().clear();
                     robots_TabView.setItems(robots_list);
                     robots_TabView.refresh();
+                    break;
+                case "admin":
+
+                    admin_AnchorPane.getChildren().add(map.display_map(false, true));
                     break;
                 default:
                     break;
@@ -149,10 +170,10 @@ public class MainController implements Initializable {
         //init
         Tab add_paquet_tab = new Tab("Ajouter paquet");
         AnchorPane add_paquet_Anchorpane = new AnchorPane();
-        TextField identifiant_paquet_Textfield = new TextField("Identifiant du paquet");
+        TextField identifiant_paquet_Textfield = new TextField();
         HBox hBox_button = new HBox();
         VBox vBox = new VBox();
-        ScrollPane carte_scrollpane = carte.display_map(false);
+        ScrollPane carte_scrollpane = map.display_map(false, false);
         Button ajouter_paquet_Button = new Button("Ajouter paquet");
         Button annuler_paquet_Button = new Button("Annuler");
 
@@ -170,13 +191,14 @@ public class MainController implements Initializable {
 
         identifiant_paquet_Textfield.setMinWidth(200);
         identifiant_paquet_Textfield.setMaxWidth(200);
+        identifiant_paquet_Textfield.setPromptText("Identifiant du paquet");
 
         hBox_button.setMaxWidth(200);
         hBox_button.setAlignment(Pos.CENTER);
         hBox_button.setSpacing(20);
 
         AnchorPane.setTopAnchor(carte_scrollpane, 50.0);
-        AnchorPane.setBottomAnchor(carte_scrollpane, 100.0);
+        AnchorPane.setBottomAnchor(carte_scrollpane, 150.0);
         AnchorPane.setRightAnchor(carte_scrollpane, 50.0);
         AnchorPane.setLeftAnchor(carte_scrollpane, 50.0);
 
@@ -186,8 +208,29 @@ public class MainController implements Initializable {
 
         //event
         ajouter_paquet_Button.setOnAction(event -> {
-            main_TabPane.getTabs().remove(add_paquet_tab);
-            main_TabPane.getSelectionModel().selectFirst();
+            boolean id_valid = false, house_valid = false;
+            if (!identifiant_paquet_Textfield.getText().isEmpty()) {
+                identifiant_paquet_Textfield.setStyle("-fx-background-color: #77ACF2");
+                id_valid = true;
+            } else {
+                identifiant_paquet_Textfield.setStyle("-fx-background-color: rgba(255,0,0,0.6)");
+                identifiant_paquet_Textfield.setPromptText("Saisi invalide");
+            }
+
+            if (selected_house != null) {
+                carte_scrollpane.setStyle("-fx-background-color: white");
+                house_valid = true;
+            } else {
+                carte_scrollpane.setStyle("-fx-background-color: rgba(255,0,0,0.6)");
+            }
+
+            if (id_valid && house_valid) {
+                JsonObject jsonObject = Json.createObjectBuilder().add("id_paquet", identifiant_paquet_Textfield.getText()).add("addr", selected_house).build();
+                webService.setHttpRequest(ADDRESS, "croisement/", WebService.POST, jsonObject.toString(), TIMEOUT);
+
+                main_TabPane.getTabs().remove(add_paquet_tab);
+                main_TabPane.getSelectionModel().selectFirst();
+            }
         });
 
         annuler_paquet_Button.setOnAction(event -> {
@@ -209,8 +252,21 @@ public class MainController implements Initializable {
             main_TabPane.getTabs().add(add_paquet_tab);
             main_TabPane.getSelectionModel().select(add_paquet_tab);
         }
+    }
 
-
+    public Task<Void> refresh_thread() {
+        return new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                //get
+                webService.setHttpRequest(ADDRESS, "livraisons/", WebService.GET, null, TIMEOUT);
+                webService.setHttpRequest(ADDRESS, "robots/", WebService.GET, null, TIMEOUT);
+                webService.setHttpRequest(ADDRESS, "croisements/", WebService.GET, null, TIMEOUT);
+                webService.setHttpRequest(ADDRESS, "maisons/", WebService.GET, null, TIMEOUT);
+                webService.setHttpRequest(ADDRESS, "paquets/", WebService.GET, null, TIMEOUT);
+                return null;
+            }
+        };
     }
 
     public void close_Button_Action(ActionEvent actionEvent) {
@@ -235,4 +291,5 @@ public class MainController implements Initializable {
                 break;
         }
     }
+
 }

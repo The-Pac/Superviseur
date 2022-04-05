@@ -33,6 +33,10 @@ TextField {
     -fx-background-color: #77ACF2;
 }
 
+DatePicker {
+    -fx-background-color: #77ACF2;
+}
+
 .close_button {
     -fx-background-color: red;
 }

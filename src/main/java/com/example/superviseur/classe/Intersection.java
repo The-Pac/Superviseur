@@ -1,19 +1,28 @@
 package com.example.superviseur.classe;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Intersection {
+    private WebService webService;
     private String id;
     private int x, y;
-    private House[] houses;
+    private ObservableList<House> houses_list;
 
     public Intersection(String id, int x, int y) {
         this.id = id;
         this.x = x;
         this.y = y;
+        this.houses_list = FXCollections.observableArrayList();
+        webService = new WebService();
     }
 
-    public void get_intersection() {
+    public void get_houses() {
+        /*for (String s : webService.setHttpRequest(ADDRESS, "maisons/", WebService.GET, null, TIMEOUT)) {
 
+        }
 
+        this.houses_list.add();*/
     }
 
     public String getId() {
@@ -40,11 +49,11 @@ public class Intersection {
         this.y = y;
     }
 
-    public House[] getHouses() {
-        return houses;
+    public ObservableList<House> getHouses_list() {
+        return houses_list;
     }
 
-    public void setHouses(House[] houses) {
-        this.houses = houses;
+    public void setHouses_list(ObservableList<House> houses_list) {
+        this.houses_list = houses_list;
     }
 }

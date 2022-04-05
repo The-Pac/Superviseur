@@ -4,29 +4,50 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6cc4916-bf5d-4442-9ca8-5318e802303e" name="Changes" comment="Version 0.1:&#10;Creation du squelette du programme&#10;Creation du FXML&#10;generation dynamique de la carte">
+    <list default="true" id="8e315677-e725-4135-901a-6081f0bb64b5" name="Changes" comment="Version 0.1:&#10;Creation du squelette du programme&#10;Creation du FXML&#10;generation dynamique de la carte">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_javax_json_1_0_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/jakarta_json_api.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/javax_json_api.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_11.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_13.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_13.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_8_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_18.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_win_18.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_18.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_win_18.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_fxml_18.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_fxml_win_18.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_18.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_win_18.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Superviseur.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Superviseur.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/MainApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Delivery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Delivery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/House.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/House.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Carte.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Croisement.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Intersection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Intersection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Maison.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Package.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Package.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Robot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Robot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/WebService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/WebService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/superviseur/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/superviseur/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/superviseur/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/superviseur/img/background.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/background.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/superviseur/img/box_top_view.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/box_top_view.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/superviseur/img/house.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/house.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/superviseur/img/logo_icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/logo_icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/superviseur/img/robot_top_view.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/robot_top_view.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/superviseur/main_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/superviseur/main_view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/MainApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/MainApplication.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/MainController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Delivery.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Delivery.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/House.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/House.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Intersection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Intersection.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Map.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Package.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Package.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Robot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Robot.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/WebService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/WebService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/css/main.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/main_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/main_view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
     </list>
@@ -70,20 +91,31 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="true" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Problems" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15332031" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Pac\IdeaProjects\Superviseur\lib" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Pac\IdeaProjects\Superviseur\src\main\resources" />
       <recent name="C:\Users\Pac\IdeaProjects\Superviseur\src\main\resources\com\example\superviseur\img" />
     </key>
   </component>
@@ -135,7 +167,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c6cc4916-bf5d-4442-9ca8-5318e802303e" name="Changes" comment="Version 0.1:&#10;Creation du squelette du programme&#10;Creation du FXML&#10;generation dynamique de la carte" />
+      <changelist id="8e315677-e725-4135-901a-6081f0bb64b5" name="Changes" comment="Version 0.2:&#10;Amelioration de la map&#10;ajout WebService" />
       <created>1648733691316</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -149,6 +181,10 @@
       <workItem from="1649052843895" duration="13218000" />
       <workItem from="1649072578016" duration="179000" />
       <workItem from="1649072907906" duration="8092000" />
+      <workItem from="1649090914107" duration="342000" />
+      <workItem from="1649140964752" duration="4234000" />
+      <workItem from="1649145269150" duration="7565000" />
+      <workItem from="1649158728808" duration="12994000" />
     </task>
     <task id="LOCAL-00001" summary="send">
       <created>1648793714421</created>
