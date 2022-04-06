@@ -37,8 +37,8 @@ public class MainController implements Initializable {
     @FXML
     public TabPane main_TabPane;
     public Tab home_Tab, delivery_Tab, robots_Tab, package_Tab, map_Tab, admin_Tab;
-    public AnchorPane home_AnchorPane, delivery_AnchorPane, robots_AnchorPane, packages_AnchorPane, map_AnchorPane, admin_AnchorPane;
-    public Button add_robot_Button, add_package_Button, close_Button;
+    public AnchorPane home_AnchorPane, delivery_AnchorPane, robots_AnchorPane, packages_AnchorPane, map_AnchorPane, admin_AnchorPane, admin_map_AnchorPane;
+    public Button add_robot_Button, add_package_Button, close_Button, add_map_Button;
     public TextField id_robot_TextField;
     public TableView<Robot> robots_TabView;
     public TableView<Delivery> deliveries_TabView;
@@ -149,8 +149,8 @@ public class MainController implements Initializable {
                     robots_TabView.refresh();
                     break;
                 case "admin":
-
-                    admin_AnchorPane.getChildren().add(map.display_map(false, true));
+                    admin_map_AnchorPane.setMinWidth(admin_AnchorPane.getWidth() / 2);
+                    admin_map_AnchorPane.getChildren().add(map.display_map(false, true));
                     break;
                 default:
                     break;
@@ -292,4 +292,7 @@ public class MainController implements Initializable {
         }
     }
 
+    public void add_map_Button_Action(ActionEvent actionEvent) {
+
+    }
 }
