@@ -19,7 +19,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Map {
-    private final int size_intersection = 30, size_road = 25, size_robot = 50, house_size_icon = 20, arrow_size_icon = 5;
+    //TODO add map coord on admin
+    private final int size_intersection = 40, size_road = 25, size_robot = 50, house_size_icon = 20, arrow_size_icon = 10;
     private final double width_la_poste = 300, road_1_top = 50;
     private WebService webService;
     private ObservableList<Intersection> intersection_ObservableList;
@@ -57,7 +58,6 @@ public class Map {
         map_scrollPane.setContent(content_AnchorPane);
 
         //style
-        content_AnchorPane.setStyle("-fx-background-color: #77ACF2");
         map_gridpane.setLayoutX(width_la_poste);
         map_gridpane.getStyleClass().add("map_gridpane");
         map_gridpane.setAlignment(Pos.CENTER);
@@ -153,66 +153,63 @@ public class Map {
 
         if (admin) {
             //init
-            AnchorPane intersection_anchorPane = new AnchorPane();
+            GridPane intersection_GridPane = new GridPane();
             Button top_button_clip = new Button(), bottom_button_clip = new Button(), right_button_clip = new Button(), left_button_clip = new Button();
 
             //style
-            intersection_anchorPane.setMinSize(size_intersection, size_intersection);
-            intersection_anchorPane.setStyle("-fx-background-color: gray");
+            intersection_GridPane.setMinSize(size_intersection, size_intersection);
+            intersection_GridPane.setStyle("-fx-background-color: gray");
 
-            Rectangle arrow_T = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("house.png"))), arrow_B = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("house.png"))), arrow_R = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("house.png"))), arrow_L = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("house.png")));
+            Rectangle arrow_T = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("arrow.png"))),
+                    arrow_B = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("arrow.png"))),
+                    arrow_R = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("arrow.png"))),
+                    arrow_L = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("arrow.png")));
+
+            arrow_L.setRotate(180);
+            arrow_T.setRotate(270);
+            arrow_B.setRotate(90);
+
+            top_button_clip.setMinSize(arrow_size_icon, arrow_size_icon);
+            bottom_button_clip.setMinSize(arrow_size_icon, arrow_size_icon);
+            right_button_clip.setMinSize(arrow_size_icon, arrow_size_icon);
+            left_button_clip.setMinSize(arrow_size_icon, arrow_size_icon);
 
             top_button_clip.setGraphic(arrow_T);
             bottom_button_clip.setGraphic(arrow_B);
             right_button_clip.setGraphic(arrow_R);
             left_button_clip.setGraphic(arrow_L);
 
-            //top
-            AnchorPane.setTopAnchor(top_button_clip, 0.0);
-            AnchorPane.setRightAnchor(top_button_clip, (intersection_anchorPane.getMinWidth() / 2) - (top_button_clip.getMinWidth() / 2));
-            AnchorPane.setLeftAnchor(top_button_clip, (intersection_anchorPane.getMinWidth() / 2) - (top_button_clip.getMinWidth() / 2));
-            intersection_anchorPane.getChildren().add(top_button_clip);
-            //bottom
-            AnchorPane.setBottomAnchor(bottom_button_clip, 0.0);
-            AnchorPane.setRightAnchor(bottom_button_clip, (intersection_anchorPane.getMinWidth() / 2) - (bottom_button_clip.getMinWidth() / 2));
-            AnchorPane.setLeftAnchor(bottom_button_clip, (intersection_anchorPane.getMinWidth() / 2) - (bottom_button_clip.getMinWidth() / 2));
-            intersection_anchorPane.getChildren().add(bottom_button_clip);
-            //right
-            AnchorPane.setRightAnchor(right_button_clip, 0.0);
-            AnchorPane.setTopAnchor(right_button_clip, (intersection_anchorPane.getMinHeight() / 2) - (right_button_clip.getMinHeight() - 2));
-            AnchorPane.setBottomAnchor(right_button_clip, (intersection_anchorPane.getMinHeight() / 2) - (right_button_clip.getMinHeight() / 2));
-            intersection_anchorPane.getChildren().add(right_button_clip);
-            //left
-            AnchorPane.setLeftAnchor(left_button_clip, 0.0);
-            AnchorPane.setTopAnchor(left_button_clip, (intersection_anchorPane.getMinHeight() / 2) - (left_button_clip.getMinHeight() - 2));
-            AnchorPane.setBottomAnchor(left_button_clip, (intersection_anchorPane.getMinHeight() / 2) - (left_button_clip.getMinHeight() / 2));
-            intersection_anchorPane.getChildren().add(left_button_clip);
+            intersection_GridPane.add(top_button_clip, 1, 0);
+            intersection_GridPane.add(bottom_button_clip, 1, 2);
+            intersection_GridPane.add(right_button_clip, 2, 1);
+            intersection_GridPane.add(left_button_clip, 0, 1);
+
 
             top_button_clip.setOnAction(event -> {
                 top_button_clip.setDisable(true);
-                add_intersection(map_gridpane, intersection_anchorPane, "top");
+                add_intersection(map_gridpane, intersection_GridPane, "top");
             });
             bottom_button_clip.setOnAction(event -> {
                 bottom_button_clip.setDisable(true);
-                add_intersection(map_gridpane, intersection_anchorPane, "bottom");
+                add_intersection(map_gridpane, intersection_GridPane, "bottom");
             });
             right_button_clip.setOnAction(event -> {
                 right_button_clip.setDisable(true);
-                add_intersection(map_gridpane, intersection_anchorPane, "right");
+                add_intersection(map_gridpane, intersection_GridPane, "right");
             });
             left_button_clip.setOnAction(event -> {
                 left_button_clip.setDisable(true);
-                add_intersection(map_gridpane, intersection_anchorPane, "left");
+                add_intersection(map_gridpane, intersection_GridPane, "left");
             });
 
 
             Platform.runLater(() -> {
                 //add
-                map_gridpane.add(intersection_anchorPane, map_gridpane.getColumnCount(), map_gridpane.getRowCount());
-                if (GridPane.getRowIndex(intersection_anchorPane) == 0) {
+                map_gridpane.add(intersection_GridPane, map_gridpane.getColumnCount(), map_gridpane.getRowCount());
+                if (GridPane.getRowIndex(intersection_GridPane) == 0) {
                     top_button_clip.setDisable(true);
                 }
-                if (GridPane.getColumnIndex(intersection_anchorPane) == 0) {
+                if (GridPane.getColumnIndex(intersection_GridPane) == 0) {
                     left_button_clip.setDisable(true);
                 }
             });
@@ -324,60 +321,56 @@ public class Map {
         return map_scrollPane;
     }
 
-    private void add_intersection(GridPane map_gridpane, AnchorPane intersection_AnchorPane, String direction) {
+    private void add_intersection(GridPane map_gridpane, GridPane intersection_GridPane, String direction) {
         //init
-        AnchorPane new_intersection_anchorPane = new AnchorPane();
+        GridPane new_intersection_GridPane = new GridPane();
         Button top_button_clip = new Button(), bottom_button_clip = new Button(), right_button_clip = new Button(), left_button_clip = new Button();
 
         //style
-        new_intersection_anchorPane.setMinSize(size_intersection, size_intersection);
-        new_intersection_anchorPane.setStyle("-fx-background-color: gray");
+        new_intersection_GridPane.setMinSize(size_intersection, size_intersection);
+        new_intersection_GridPane.setStyle("-fx-background-color: gray");
 
 
-        Rectangle house_1 = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("house.png"))), house_2 = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("house.png"))), house_3 = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("house.png"))), house_4 = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("house.png")));
+        Rectangle arrow_T = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("arrow.png"))),
+                arrow_B = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("arrow.png"))),
+                arrow_R = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("arrow.png"))),
+                arrow_L = new Rectangle(arrow_size_icon, arrow_size_icon, new ImagePattern(new Image("arrow.png")));
 
-        top_button_clip.setGraphic(house_1);
-        bottom_button_clip.setGraphic(house_2);
-        right_button_clip.setGraphic(house_3);
-        left_button_clip.setGraphic(house_4);
+        arrow_L.setRotate(180);
+        arrow_T.setRotate(270);
+        arrow_B.setRotate(90);
 
+        top_button_clip.setMinSize(arrow_size_icon, arrow_size_icon);
+        bottom_button_clip.setMinSize(arrow_size_icon, arrow_size_icon);
+        right_button_clip.setMinSize(arrow_size_icon, arrow_size_icon);
+        left_button_clip.setMinSize(arrow_size_icon, arrow_size_icon);
 
-        //top
-        AnchorPane.setTopAnchor(top_button_clip, 0.0);
-        AnchorPane.setRightAnchor(top_button_clip, (new_intersection_anchorPane.getMinWidth() / 2) - (top_button_clip.getMinWidth() / 2));
-        AnchorPane.setLeftAnchor(top_button_clip, (new_intersection_anchorPane.getMinWidth() / 2) - (top_button_clip.getMinWidth() / 2));
-        new_intersection_anchorPane.getChildren().add(top_button_clip);
-        //bottom
-        AnchorPane.setBottomAnchor(bottom_button_clip, 0.0);
-        AnchorPane.setRightAnchor(bottom_button_clip, (new_intersection_anchorPane.getMinWidth() / 2) - (bottom_button_clip.getMinWidth() / 2));
-        AnchorPane.setLeftAnchor(bottom_button_clip, (new_intersection_anchorPane.getMinWidth() / 2) - (bottom_button_clip.getMinWidth() / 2));
-        new_intersection_anchorPane.getChildren().add(bottom_button_clip);
-        //right
-        AnchorPane.setRightAnchor(right_button_clip, 0.0);
-        AnchorPane.setTopAnchor(right_button_clip, (new_intersection_anchorPane.getMinHeight() / 2) - (right_button_clip.getMinHeight() - 2));
-        AnchorPane.setBottomAnchor(right_button_clip, (new_intersection_anchorPane.getMinHeight() / 2) - (right_button_clip.getMinHeight() / 2));
-        new_intersection_anchorPane.getChildren().add(right_button_clip);
-        //left
-        AnchorPane.setLeftAnchor(left_button_clip, 0.0);
-        AnchorPane.setTopAnchor(left_button_clip, (new_intersection_anchorPane.getMinHeight() / 2) - (left_button_clip.getMinHeight() - 2));
-        AnchorPane.setBottomAnchor(left_button_clip, (new_intersection_anchorPane.getMinHeight() / 2) - (left_button_clip.getMinHeight() / 2));
-        new_intersection_anchorPane.getChildren().add(left_button_clip);
+        top_button_clip.setGraphic(arrow_T);
+        bottom_button_clip.setGraphic(arrow_B);
+        right_button_clip.setGraphic(arrow_R);
+        left_button_clip.setGraphic(arrow_L);
+
+        new_intersection_GridPane.add(top_button_clip, 1, 0);
+        new_intersection_GridPane.add(bottom_button_clip, 1, 2);
+        new_intersection_GridPane.add(right_button_clip, 2, 1);
+        new_intersection_GridPane.add(left_button_clip, 0, 1);
+
 
         top_button_clip.setOnAction(event -> {
             top_button_clip.setDisable(true);
-            add_intersection(map_gridpane, new_intersection_anchorPane, "top");
+            add_intersection(map_gridpane, new_intersection_GridPane, "top");
         });
         bottom_button_clip.setOnAction(event -> {
             bottom_button_clip.setDisable(true);
-            add_intersection(map_gridpane, new_intersection_anchorPane, "bottom");
+            add_intersection(map_gridpane, new_intersection_GridPane, "bottom");
         });
         right_button_clip.setOnAction(event -> {
             right_button_clip.setDisable(true);
-            add_intersection(map_gridpane, new_intersection_anchorPane, "right");
+            add_intersection(map_gridpane, new_intersection_GridPane, "right");
         });
         left_button_clip.setOnAction(event -> {
             left_button_clip.setDisable(true);
-            add_intersection(map_gridpane, new_intersection_anchorPane, "left");
+            add_intersection(map_gridpane, new_intersection_GridPane, "left");
         });
         Rectangle road_vertical_clip = new Rectangle(size_road, 100 + (house_size_icon * 2), Color.GREY), road_horizontal_clip = new Rectangle(100 + (house_size_icon * 2), size_road, Color.GREY);
 
@@ -398,54 +391,54 @@ public class Map {
             switch (direction) {
                 case "top":
                     bottom_button_clip.setDisable(true);
-                    if (GridPane.getRowIndex(intersection_AnchorPane) - 2 >= 0) {
-                        if (check_empty(GridPane.getColumnIndex(intersection_AnchorPane), GridPane.getRowIndex(intersection_AnchorPane) - 2, map_gridpane)) {
-                            map_gridpane.add(new_intersection_anchorPane, GridPane.getColumnIndex(intersection_AnchorPane), GridPane.getRowIndex(intersection_AnchorPane) - 2);
+                    if (GridPane.getRowIndex(intersection_GridPane) - 2 >= 0) {
+                        if (check_empty(GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) - 2, map_gridpane)) {
+                            map_gridpane.add(new_intersection_GridPane, GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) - 2);
                         }
-                        map_gridpane.add(road_vertical_clip, GridPane.getColumnIndex(intersection_AnchorPane), GridPane.getRowIndex(intersection_AnchorPane) - 1);
+                        map_gridpane.add(road_vertical_clip, GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) - 1);
                     }
 
                     break;
                 case "bottom":
                     top_button_clip.setDisable(true);
-                    if (GridPane.getRowIndex(intersection_AnchorPane) + 2 < map_gridpane.getRowCount()) {
-                        if (check_empty(GridPane.getColumnIndex(intersection_AnchorPane), GridPane.getRowIndex(intersection_AnchorPane) + 2, map_gridpane)) {
-                            map_gridpane.add(new_intersection_anchorPane, GridPane.getColumnIndex(intersection_AnchorPane), GridPane.getRowIndex(intersection_AnchorPane) + 2);
+                    if (GridPane.getRowIndex(intersection_GridPane) + 2 < map_gridpane.getRowCount()) {
+                        if (check_empty(GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) + 2, map_gridpane)) {
+                            map_gridpane.add(new_intersection_GridPane, GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) + 2);
                         }
                     } else {
-                        map_gridpane.add(new_intersection_anchorPane, GridPane.getColumnIndex(intersection_AnchorPane), GridPane.getRowIndex(intersection_AnchorPane) + 2);
+                        map_gridpane.add(new_intersection_GridPane, GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) + 2);
                     }
-                    map_gridpane.add(road_vertical_clip, GridPane.getColumnIndex(intersection_AnchorPane), GridPane.getRowIndex(intersection_AnchorPane) + 1);
+                    map_gridpane.add(road_vertical_clip, GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) + 1);
                     break;
                 case "left":
                     right_button_clip.setDisable(true);
-                    if (GridPane.getColumnIndex(intersection_AnchorPane) - 2 >= 0) {
-                        if (check_empty(GridPane.getColumnIndex(intersection_AnchorPane) - 2, GridPane.getRowIndex(intersection_AnchorPane), map_gridpane)) {
-                            map_gridpane.add(new_intersection_anchorPane, GridPane.getColumnIndex(intersection_AnchorPane) - 2, GridPane.getRowIndex(intersection_AnchorPane));
+                    if (GridPane.getColumnIndex(intersection_GridPane) - 2 >= 0) {
+                        if (check_empty(GridPane.getColumnIndex(intersection_GridPane) - 2, GridPane.getRowIndex(intersection_GridPane), map_gridpane)) {
+                            map_gridpane.add(new_intersection_GridPane, GridPane.getColumnIndex(intersection_GridPane) - 2, GridPane.getRowIndex(intersection_GridPane));
                         }
-                        map_gridpane.add(road_horizontal_clip, GridPane.getColumnIndex(intersection_AnchorPane) - 1, GridPane.getRowIndex(intersection_AnchorPane));
+                        map_gridpane.add(road_horizontal_clip, GridPane.getColumnIndex(intersection_GridPane) - 1, GridPane.getRowIndex(intersection_GridPane));
                     }
                     break;
                 case "right":
                     left_button_clip.setDisable(true);
-                    if (GridPane.getColumnIndex(intersection_AnchorPane) + 2 < map_gridpane.getColumnCount()) {
-                        if (check_empty(GridPane.getColumnIndex(intersection_AnchorPane), GridPane.getRowIndex(intersection_AnchorPane) + 2, map_gridpane)) {
-                            map_gridpane.add(new_intersection_anchorPane, GridPane.getColumnIndex(intersection_AnchorPane) + 2, GridPane.getRowIndex(intersection_AnchorPane));
+                    if (GridPane.getColumnIndex(intersection_GridPane) + 2 < map_gridpane.getColumnCount()) {
+                        if (check_empty(GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) + 2, map_gridpane)) {
+                            map_gridpane.add(new_intersection_GridPane, GridPane.getColumnIndex(intersection_GridPane) + 2, GridPane.getRowIndex(intersection_GridPane));
                         }
                     } else {
-                        map_gridpane.add(new_intersection_anchorPane, GridPane.getColumnIndex(intersection_AnchorPane) + 2, GridPane.getRowIndex(intersection_AnchorPane));
+                        map_gridpane.add(new_intersection_GridPane, GridPane.getColumnIndex(intersection_GridPane) + 2, GridPane.getRowIndex(intersection_GridPane));
                     }
-                    map_gridpane.add(road_horizontal_clip, GridPane.getColumnIndex(intersection_AnchorPane) + 1, GridPane.getRowIndex(intersection_AnchorPane));
+                    map_gridpane.add(road_horizontal_clip, GridPane.getColumnIndex(intersection_GridPane) + 1, GridPane.getRowIndex(intersection_GridPane));
                     break;
                 default:
                     break;
             }
             //check x = 0 && y = 0
-            if (map_gridpane.getChildren().contains(new_intersection_anchorPane)) {
-                if (GridPane.getRowIndex(new_intersection_anchorPane) == 0) {
+            if (map_gridpane.getChildren().contains(new_intersection_GridPane)) {
+                if (GridPane.getRowIndex(new_intersection_GridPane) == 0) {
                     top_button_clip.setDisable(true);
                 }
-                if (GridPane.getColumnIndex(new_intersection_anchorPane) == 0) {
+                if (GridPane.getColumnIndex(new_intersection_GridPane) == 0) {
                     left_button_clip.setDisable(true);
                 }
             }
@@ -455,7 +448,6 @@ public class Map {
     public boolean check_empty(int column, int row, GridPane gridPane) {
         for (Node node : gridPane.getChildren()) {
             if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
-                node.setStyle("-fx-background-color: red");
                 return false;
             }
         }
