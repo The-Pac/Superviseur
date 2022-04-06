@@ -31,6 +31,7 @@
 
 TextField {
     -fx-background-color: #77ACF2;
+    -fx-prompt-text-fill: white;
 }
 
 DatePicker {

@@ -3,20 +3,22 @@ package com.example.superviseur.classe;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.util.Date;
-
 public class Package {
-    private StringProperty id;
+    private StringProperty id, date;
     private House house;
-    private Date date;
 
     public Package() {
     }
 
-    public Package(String id, House house, Date date) {
+    /**
+     * @param id
+     * @param house
+     * @param date
+     */
+    public Package(String id, House house, String date) {
         this.id = new SimpleStringProperty(this, "id", id);
         this.house = house;
-        this.date = date;
+        this.date = new SimpleStringProperty(this, "date", date);
     }
 
     public String getId() {
@@ -39,11 +41,15 @@ public class Package {
         this.house = house;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        return date.get();
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(String date) {
+        this.date.set(date);
+    }
+
+    public StringProperty dateProperty() {
+        return date;
     }
 }

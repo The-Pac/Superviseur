@@ -1,15 +1,13 @@
 package com.example.superviseur.classe;
 
-import java.util.Date;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class Delivery {
-    private String statut;
+    private final StringProperty statut, date;
     private Package aPackage;
     private Robot robot;
-    private Date date;
 
-    public Delivery() {
-    }
 
     /**
      * Statut = "à livrer" || "en cours de livraison" || "livré"
@@ -19,19 +17,35 @@ public class Delivery {
      * @param robot
      * @param date
      */
-    public Delivery(String statut, Package aPackage, Robot robot, Date date) {
-        this.statut = statut;
+    public Delivery(String statut, Package aPackage, Robot robot, String date) {
+        this.statut = new SimpleStringProperty(this, "statut", statut);
         this.aPackage = aPackage;
         this.robot = robot;
-        this.date = date;
+        this.date = new SimpleStringProperty(this, "date", date);
     }
 
     public String getStatut() {
-        return statut;
+        return statut.get();
     }
 
     public void setStatut(String statut) {
-        this.statut = statut;
+        this.statut.set(statut);
+    }
+
+    public StringProperty statutProperty() {
+        return statut;
+    }
+
+    public String getDate() {
+        return date.get();
+    }
+
+    public void setDate(String date) {
+        this.date.set(date);
+    }
+
+    public StringProperty dateProperty() {
+        return date;
     }
 
     public Package getaPackage() {
@@ -48,13 +62,5 @@ public class Delivery {
 
     public void setRobot(Robot robot) {
         this.robot = robot;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 }

@@ -4,11 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Intersection {
-    private WebService webService;
+    private final WebService webService;
     private String id;
     private int x, y;
     private ObservableList<House> houses_list;
 
+    /**
+     * @param id
+     * @param x
+     * @param y
+     */
     public Intersection(String id, int x, int y) {
         this.id = id;
         this.x = x;
@@ -17,6 +22,9 @@ public class Intersection {
         webService = new WebService();
     }
 
+    /**
+     * Get all the houses & intersections
+     */
     public void get_houses() {
         /*for (String s : webService.setHttpRequest(ADDRESS, "maisons/", WebService.GET, null, TIMEOUT)) {
 

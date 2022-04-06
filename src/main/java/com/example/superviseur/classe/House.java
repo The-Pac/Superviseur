@@ -1,46 +1,74 @@
 package com.example.superviseur.classe;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class House {
 
-    private String id;
-    private int number, x, y;
+    private final StringProperty id;
+    private final IntegerProperty number, x, y;
 
+
+    /**
+     * @param id
+     * @param number
+     * @param x
+     * @param y
+     */
     public House(String id, int number, int x, int y) {
-        this.id = id;
-        this.number = number;
-        this.x = x;
-        this.y = y;
+        this.id = new SimpleStringProperty(this, "id", id);
+        this.number = new SimpleIntegerProperty(this, "number", number);
+        this.x = new SimpleIntegerProperty(this, "x", x);
+        this.y = new SimpleIntegerProperty(this, "y", y);
     }
 
     public String getId() {
-        return id;
+        return id.get();
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id.set(id);
+    }
+
+    public StringProperty idProperty() {
+        return id;
     }
 
     public int getNumber() {
-        return number;
+        return number.get();
     }
 
     public void setNumber(int number) {
-        this.number = number;
+        this.number.set(number);
+    }
+
+    public IntegerProperty numberProperty() {
+        return number;
     }
 
     public int getX() {
-        return x;
+        return x.get();
     }
 
     public void setX(int x) {
-        this.x = x;
+        this.x.set(x);
+    }
+
+    public IntegerProperty xProperty() {
+        return x;
     }
 
     public int getY() {
-        return y;
+        return y.get();
     }
 
     public void setY(int y) {
-        this.y = y;
+        this.y.set(y);
+    }
+
+    public IntegerProperty yProperty() {
+        return y;
     }
 }

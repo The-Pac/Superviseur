@@ -4,16 +4,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Robot {
-    private StringProperty id, statut;
+    private final StringProperty id, statut;
     private int x, y;
 
-    public Robot() {
-    }
 
     /**
-     * Statut = "en course" || "pret"
+     * Statut = "en course" || "pret" || "retour"
+     * @param id
+     * @param statut
+     * @param x
+     * @param y
      */
-
     public Robot(String id, String statut, int x, int y) {
         this.id = new SimpleStringProperty(this, "id", id);
         this.statut = new SimpleStringProperty(this, "statut", statut);

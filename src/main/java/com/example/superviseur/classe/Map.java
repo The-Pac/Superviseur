@@ -1,6 +1,5 @@
 package com.example.superviseur.classe;
 
-import com.example.superviseur.MainController;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,11 +19,13 @@ import javafx.scene.shape.Rectangle;
 
 public class Map {
     //TODO add map coord on admin
-    private final int size_intersection = 40, size_road = 25, size_robot = 50, house_size_icon = 20, arrow_size_icon = 10;
-    private final double width_la_poste = 300, road_1_top = 50;
-    private WebService webService;
-    private ObservableList<Intersection> intersection_ObservableList;
+    private final int size_intersection = 20, size_road = 25, house_size_icon = 20, arrow_size_icon = 10;
+    private final ObservableList<Intersection> intersection_ObservableList;
+    private final WebService webService;
+    private final Data data;
+    public ObservableList<Integer[]> map_admin_add = FXCollections.observableArrayList();
     private int la_poste_offset_x = 0, la_poste_offset_y = 0;
+
 
     public Map() {
         webService = new WebService();
@@ -32,13 +33,15 @@ public class Map {
 
         //webService.setHttpRequest(ADDRESS, "croisements", WebService.GET, null, TIMEOUT);
         //TODO add intersection in array
+        data = new Data();
     }
 
 
     /**
-     * returns a dynamic map
+     * returns a dynamic map with different mode
      *
      * @param poste
+     * @param admin
      * @return ScrollPane
      */
 
@@ -50,15 +53,10 @@ public class Map {
         ScrollPane map_scrollPane = new ScrollPane();
         GridPane map_gridpane = new GridPane();
 
-
-        AnchorPane.setLeftAnchor(map_gridpane, width_la_poste);
-        AnchorPane.setTopAnchor(map_gridpane, (50. + road_1_top) - ((size_intersection - size_road) / 2));
-
         content_AnchorPane.getChildren().add(map_gridpane);
         map_scrollPane.setContent(content_AnchorPane);
 
         //style
-        map_gridpane.setLayoutX(width_la_poste);
         map_gridpane.getStyleClass().add("map_gridpane");
         map_gridpane.setAlignment(Pos.CENTER);
         AnchorPane.setTopAnchor(map_scrollPane, 50.);
@@ -146,13 +144,14 @@ public class Map {
 
                     //district
                     map_gridpane.add(district_AnchorPane, intersection.getX() + 1, intersection.getY() + 1);
-
                 }
             }
         }
 
         if (admin) {
             //init
+            AnchorPane.setLeftAnchor(map_gridpane, 20.);
+            AnchorPane.setTopAnchor(map_gridpane, 20.);
             GridPane intersection_GridPane = new GridPane();
             Button top_button_clip = new Button(), bottom_button_clip = new Button(), right_button_clip = new Button(), left_button_clip = new Button();
 
@@ -217,6 +216,10 @@ public class Map {
 
         if (poste) {
             //init la poste
+            double width_la_poste = 300, road_1_top = 50;
+            AnchorPane.setTopAnchor(map_gridpane, (50. + road_1_top) - ((size_intersection - size_road) / 2));
+            AnchorPane.setLeftAnchor(map_gridpane, width_la_poste);
+            map_gridpane.setLayoutX(width_la_poste);
             AnchorPane la_poste_AnchorPane = new AnchorPane();
             ScrollPane la_poste_scrollPane = new ScrollPane();
             GridPane la_poste_GridPane = new GridPane();
@@ -266,61 +269,72 @@ public class Map {
             la_poste_scrollPane.setContent(la_poste_GridPane);
             la_poste_AnchorPane.getChildren().addAll(la_poste_Label, road_1, road_2, la_poste_scrollPane);
             content_AnchorPane.getChildren().add(la_poste_AnchorPane);
-            if (!MainController.getRobots_list().isEmpty()) {
-                for (Robot robot : MainController.getRobots_list()) {
-                    AnchorPane robot_anchorPane = new AnchorPane();
-                    Rectangle robot_rect = new Rectangle();
-                    robot_rect.setFill(new ImagePattern(new Image("robot_top_view.png")));
-                    Rectangle package_rect = new Rectangle();
+            if (data.getRobots() != null) {
+                if (!data.getRobots().isEmpty()) {
+                    for (Robot robot : data.getRobots()) {
+                        AnchorPane robot_anchorPane = new AnchorPane();
+                        Rectangle robot_rect = new Rectangle();
+                        robot_rect.setFill(new ImagePattern(new Image("robot_top_view.png")));
+                        Rectangle package_rect = new Rectangle();
 
-                    //style
-                    robot_rect.setHeight(size_robot);
-                    robot_rect.setWidth(size_robot);
+                        //style
+                        int size_robot = 50;
+                        robot_rect.setHeight(size_robot);
+                        robot_rect.setWidth(size_robot);
 
-                    robot_anchorPane.setMinSize(size_robot, size_robot);
+                        robot_anchorPane.setMinSize(size_robot, size_robot);
 
-                    AnchorPane.setTopAnchor(robot_rect, 0.);
-                    AnchorPane.setRightAnchor(robot_rect, 0.);
-                    AnchorPane.setLeftAnchor(robot_rect, 0.);
-                    AnchorPane.setBottomAnchor(robot_rect, 0.);
+                        AnchorPane.setTopAnchor(robot_rect, 0.);
+                        AnchorPane.setRightAnchor(robot_rect, 0.);
+                        AnchorPane.setLeftAnchor(robot_rect, 0.);
+                        AnchorPane.setBottomAnchor(robot_rect, 0.);
 
-                    robot_anchorPane.getChildren().add(robot_rect);
-                    switch (robot.getStatut()) {
-                        case "en course":
-                            package_rect.setFill(new ImagePattern(new Image("box_top_view.png")));
+                        robot_anchorPane.getChildren().add(robot_rect);
+                        switch (robot.getStatut()) {
+                            case "en course":
+                                package_rect.setFill(new ImagePattern(new Image("box_top_view.png")));
 
-                            //style
-                            package_rect.setHeight(size_robot - 20);
-                            package_rect.setWidth(size_robot - 20);
+                                //style
+                                package_rect.setHeight(size_robot - 20);
+                                package_rect.setWidth(size_robot - 20);
 
-                            AnchorPane.setTopAnchor(package_rect, 10.);
-                            AnchorPane.setLeftAnchor(package_rect, 10.);
+                                AnchorPane.setTopAnchor(package_rect, 10.);
+                                AnchorPane.setLeftAnchor(package_rect, 10.);
 
-                            robot_anchorPane.getChildren().add(package_rect);
-                            map_gridpane.add(robot_anchorPane, robot.getX(), robot.getY());
-                            break;
-                        case "pret":
-                            robot_anchorPane.getChildren().remove(package_rect);
-                            if (la_poste_offset_x < 5) {
-                                la_poste_GridPane.add(robot_anchorPane, la_poste_offset_x, la_poste_offset_y);
-                                la_poste_offset_x++;
-                            } else {
-                                la_poste_offset_y++;
-                                la_poste_offset_x = 0;
-                            }
-                            break;
-                        case "retour":
-                            robot_anchorPane.getChildren().remove(package_rect);
-                            map_gridpane.add(robot_anchorPane, robot.getX(), robot.getY());
-                            break;
+                                robot_anchorPane.getChildren().add(package_rect);
+                                map_gridpane.add(robot_anchorPane, robot.getX(), robot.getY());
+                                break;
+                            case "pret":
+                                robot_anchorPane.getChildren().remove(package_rect);
+                                if (la_poste_offset_x < 5) {
+                                    la_poste_GridPane.add(robot_anchorPane, la_poste_offset_x, la_poste_offset_y);
+                                    la_poste_offset_x++;
+                                } else {
+                                    la_poste_offset_y++;
+                                    la_poste_offset_x = 0;
+                                }
+                                break;
+                            case "retour":
+                                robot_anchorPane.getChildren().remove(package_rect);
+                                map_gridpane.add(robot_anchorPane, robot.getX(), robot.getY());
+                                break;
+                        }
                     }
                 }
             }
+
         }
 
         return map_scrollPane;
     }
 
+    /**
+     * Generate a new intersection with event in recursive
+     *
+     * @param map_gridpane
+     * @param intersection_GridPane
+     * @param direction
+     */
     private void add_intersection(GridPane map_gridpane, GridPane intersection_GridPane, String direction) {
         //init
         GridPane new_intersection_GridPane = new GridPane();
@@ -392,17 +406,18 @@ public class Map {
                 case "top":
                     bottom_button_clip.setDisable(true);
                     if (GridPane.getRowIndex(intersection_GridPane) - 2 >= 0) {
-                        if (check_empty(GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) - 2, map_gridpane)) {
+                        if (check_empty_position(GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) - 2, map_gridpane)) {
                             map_gridpane.add(new_intersection_GridPane, GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) - 2);
                         }
                         map_gridpane.add(road_vertical_clip, GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) - 1);
+                        map_admin_add.add(new Integer[]{GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) - 1});
                     }
 
                     break;
                 case "bottom":
                     top_button_clip.setDisable(true);
                     if (GridPane.getRowIndex(intersection_GridPane) + 2 < map_gridpane.getRowCount()) {
-                        if (check_empty(GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) + 2, map_gridpane)) {
+                        if (check_empty_position(GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) + 2, map_gridpane)) {
                             map_gridpane.add(new_intersection_GridPane, GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) + 2);
                         }
                     } else {
@@ -413,7 +428,7 @@ public class Map {
                 case "left":
                     right_button_clip.setDisable(true);
                     if (GridPane.getColumnIndex(intersection_GridPane) - 2 >= 0) {
-                        if (check_empty(GridPane.getColumnIndex(intersection_GridPane) - 2, GridPane.getRowIndex(intersection_GridPane), map_gridpane)) {
+                        if (check_empty_position(GridPane.getColumnIndex(intersection_GridPane) - 2, GridPane.getRowIndex(intersection_GridPane), map_gridpane)) {
                             map_gridpane.add(new_intersection_GridPane, GridPane.getColumnIndex(intersection_GridPane) - 2, GridPane.getRowIndex(intersection_GridPane));
                         }
                         map_gridpane.add(road_horizontal_clip, GridPane.getColumnIndex(intersection_GridPane) - 1, GridPane.getRowIndex(intersection_GridPane));
@@ -422,7 +437,7 @@ public class Map {
                 case "right":
                     left_button_clip.setDisable(true);
                     if (GridPane.getColumnIndex(intersection_GridPane) + 2 < map_gridpane.getColumnCount()) {
-                        if (check_empty(GridPane.getColumnIndex(intersection_GridPane), GridPane.getRowIndex(intersection_GridPane) + 2, map_gridpane)) {
+                        if (check_empty_position(GridPane.getColumnIndex(intersection_GridPane) + 2, GridPane.getRowIndex(intersection_GridPane), map_gridpane)) {
                             map_gridpane.add(new_intersection_GridPane, GridPane.getColumnIndex(intersection_GridPane) + 2, GridPane.getRowIndex(intersection_GridPane));
                         }
                     } else {
@@ -445,7 +460,15 @@ public class Map {
         });
     }
 
-    public boolean check_empty(int column, int row, GridPane gridPane) {
+    /**
+     * Check if at x & y there is a node
+     *
+     * @param column
+     * @param row
+     * @param gridPane
+     * @return boolean
+     */
+    public boolean check_empty_position(int column, int row, GridPane gridPane) {
         for (Node node : gridPane.getChildren()) {
             if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
                 return false;
@@ -453,4 +476,6 @@ public class Map {
         }
         return true;
     }
+
+
 }
