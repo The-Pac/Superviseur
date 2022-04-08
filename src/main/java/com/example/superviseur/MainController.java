@@ -3,6 +3,7 @@ package com.example.superviseur;
 import com.example.superviseur.classe.Package;
 import com.example.superviseur.classe.*;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +23,7 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     //const
-    public static final String ADDRESS = "http://10.3.1.235:8000/";
+    public static final String ADDRESS = "http://localhost:8000/";
     public static final int TIMEOUT = 15;
 
     //variable
@@ -40,19 +41,20 @@ public class MainController implements Initializable {
     public TableView<Robot> robots_TabView;
     public TableView<Delivery> deliveries_TabView;
     public TableView<Package> packages_TabView;
-    public ComboBox<Robot> robot_ComboBox;
-
 
     //robot columns
     public TableColumn<Robot, String> nom_robot_TableColumn;
+    public TableColumn<Robot, Number> number_delivery_robot_TableColumn;
     public TableColumn<Robot, Circle> statut_robot_TableColumn;
 
     //delivery columns
-    public TableColumn<Delivery, String> address_delivery_TableColumn, date_delivery_TableColumn;
+    public TableColumn<Delivery, String> paquet_delivery_TableColumn, robot_delivery_TableColumn, time_between_delivery_TableColumn, date_delivered_delivery_TableColumn, arriving_date_delivery_TableColumn;
     public TableColumn<Delivery, Circle> statut_delivery_TableColumn;
+    public TableColumn<Delivery, Number> address_delivery_TableColumn;
 
     //paquet columns
-    public TableColumn<Package, String> id_package_TableColumn, address_package_TableColumn, arriving_date_package_TableColumn;
+    public TableColumn<Package, String> arriving_date_package_TableColumn, identifiant_package_TableColumn;
+    public TableColumn<Package, Number> address_package_TableColumn;
 
     public static String getSelected_house() {
         return selected_house;
@@ -69,48 +71,59 @@ public class MainController implements Initializable {
         webService = new WebService();
         map = new Map();
         data = new Data();
-        //data.refresh_thread();
-
-        robot_ComboBox.valueProperty().addListener(observable -> {
-            //System.out.println(observable);
-
-        });
+        data.refresh_thread();
 
 
         //set tablecolumn
         //paquets
-        id_package_TableColumn.setCellValueFactory(param -> param.getValue().idProperty());
+        identifiant_package_TableColumn.setCellValueFactory(param -> param.getValue().identifiantProperty());
         arriving_date_package_TableColumn.setCellValueFactory(param -> param.getValue().dateProperty());
-        address_package_TableColumn.setCellValueFactory(param -> param.getValue().getHouse().idProperty());
+        address_package_TableColumn.setCellValueFactory(param -> param.getValue().getHouse().id_houseProperty());
+
+        data.getPackages().addListener((ListChangeListener<? super Package>) c -> {
+            packages_TabView.refresh();
+        });
+
+        packages_TabView.setItems(data.getPackages());
 
         //delivery
-        date_delivery_TableColumn.setCellValueFactory(param -> param.getValue().dateProperty());
-        address_delivery_TableColumn.setCellValueFactory(param -> param.getValue().getaPackage().getHouse().idProperty());
+        robot_delivery_TableColumn.setCellValueFactory(param -> param.getValue().getRobot().identifiantProperty());
+        paquet_delivery_TableColumn.setCellValueFactory(param -> param.getValue().getaPackage().identifiantProperty());
+        address_delivery_TableColumn.setCellValueFactory(param -> param.getValue().getaPackage().getHouse().id_houseProperty());
+        arriving_date_delivery_TableColumn.setCellValueFactory(param -> param.getValue().getaPackage().dateProperty());
+        date_delivered_delivery_TableColumn.setCellValueFactory(param -> param.getValue().date_deliveredProperty());
         statut_delivery_TableColumn.setCellValueFactory(param -> {
             Circle statut_circle = new Circle(10);
             switch (param.getValue().statutProperty().getValue()) {
-                case "à livrer":
-                    statut_circle.setFill(Color.BLUE);
+                case "a livrer":
+                    statut_circle.setFill(Color.YELLOW);
                     break;
                 case "en cours de livraison":
                     statut_circle.setFill(Color.YELLOW);
                     break;
-                case "livré":
-                    statut_circle.setFill(Color.GREEN);
+                case "livre":
+                    statut_circle.setFill(Color.RED);
                     break;
                 default:
                     break;
             }
             return new SimpleObjectProperty<>(statut_circle);
         });
+        time_between_delivery_TableColumn.setCellValueFactory(param -> param.getValue().time_betweenProperty());
+
+        data.getDeliveries().addListener((ListChangeListener<? super Delivery>) c -> {
+            deliveries_TabView.refresh();
+        });
+
+        deliveries_TabView.setItems(data.getDeliveries());
 
         //robot
-        nom_robot_TableColumn.setCellValueFactory(param -> param.getValue().idProperty());
+        nom_robot_TableColumn.setCellValueFactory(param -> param.getValue().identifiantProperty());
         statut_robot_TableColumn.setCellValueFactory(param -> {
             Circle statut_circle = new Circle(10);
             switch (param.getValue().statutProperty().getValue()) {
                 case "en course":
-                    statut_circle.setFill(Color.YELLOW);
+                    statut_circle.setFill(Color.RED);
                     break;
                 case "pret":
                     statut_circle.setFill(Color.GREEN);
@@ -120,6 +133,12 @@ public class MainController implements Initializable {
             }
             return new SimpleObjectProperty<>(statut_circle);
         });
+        number_delivery_robot_TableColumn.setCellValueFactory(param -> param.getValue().number_deliveryProperty());
+
+        data.getRobots().addListener((ListChangeListener<? super Robot>) c -> {
+            robots_TabView.refresh();
+        });
+        robots_TabView.setItems(data.getRobots());
 
 
         //style
@@ -136,22 +155,21 @@ public class MainController implements Initializable {
                 case "livraisons":
                     break;
                 case "carte":
-                    robot_ComboBox.setItems(data.getRobots());
-                    robot_ComboBox.setConverter(new StringConverter<>() {
-                        @Override
-                        public String toString(Robot object) {
-                            return object.getId();
-                        }
-
-                        @Override
-                        public Robot fromString(String string) {
-                            return null;
-                        }
-                    });
-                    robot_ComboBox.getSelectionModel().selectFirst();
-
                     //graphic
+                    /*data.getIntersections().addListener((ListChangeListener<? super Intersection>) c -> {
+                        if (data.getIntersections().size() > 0) {
+                            Platform.runLater(() -> {
+                                ScrollPane scrollPane = map.display_map(true, false);
+                                map_AnchorPane.getChildren().remove(scrollPane);
+                                map_AnchorPane.getChildren().add(scrollPane);
+                            });
+                        }
+
+
+                    });*/
                     map_AnchorPane.getChildren().add(map.display_map(true, false));
+
+
                     break;
                 case "robots":
                     //graphic
@@ -160,6 +178,15 @@ public class MainController implements Initializable {
                     break;
                 case "admin":
                     admin_map_AnchorPane.setMinWidth(admin_AnchorPane.getWidth() / 2);
+                    /*data.getIntersections().addListener((ListChangeListener<? super Intersection>) c -> {
+                        if (data.getIntersections().size() > 0) {
+                            Platform.runLater(() -> {
+                                ScrollPane scrollPane = map.display_map(true, false);
+                                admin_map_AnchorPane.getChildren().remove(scrollPane);
+                                admin_map_AnchorPane.getChildren().add(scrollPane);
+                            });
+                        }
+                    });*/
                     admin_map_AnchorPane.getChildren().add(map.display_map(false, true));
                     break;
                 default:
@@ -175,7 +202,7 @@ public class MainController implements Initializable {
      */
     public void add_robot_Button_Action(ActionEvent actionEvent) {
         if (!id_robot_TextField.getText().isEmpty() && !id_robot_TextField.getText().isBlank()) {
-            JsonObject jsonObject = Json.createObjectBuilder().add("nom", id_robot_TextField.getText()).build();
+            JsonObject jsonObject = Json.createObjectBuilder().add("identifiant", id_robot_TextField.getText()).build();
             webService.setHttpRequest(ADDRESS, "robot/", WebService.POST, jsonObject.toString(), TIMEOUT);
         } else {
             id_robot_TextField.setStyle("-fx-background-color: rgba(255,0,0,0.32)");
@@ -199,6 +226,7 @@ public class MainController implements Initializable {
 
         if (tab_found == null) {
             //init
+            ComboBox<House> houses_ComboBox = new ComboBox<>();
             Tab add_paquet_tab = new Tab("Ajouter paquet");
             add_paquet_tab.setId("add_paquet_tab");
             AnchorPane add_paquet_Anchorpane = new AnchorPane();
@@ -208,6 +236,21 @@ public class MainController implements Initializable {
             ScrollPane carte_scrollpane = map.display_map(false, false);
             Button ajouter_paquet_Button = new Button("Ajouter paquet");
             Button annuler_paquet_Button = new Button("Annuler");
+
+            houses_ComboBox.setItems(data.getHouses());
+            houses_ComboBox.setConverter(new StringConverter<>() {
+                @Override
+                public String toString(House object) {
+                    return String.valueOf(object.getId_house());
+                }
+
+                @Override
+                public House fromString(String string) {
+                    return null;
+                }
+            });
+            houses_ComboBox.getSelectionModel().selectFirst();
+
 
             //style
             add_paquet_Anchorpane.getStyleClass().add("anchor_content");
@@ -225,7 +268,7 @@ public class MainController implements Initializable {
             identifiant_paquet_Textfield.setMaxWidth(200);
             identifiant_paquet_Textfield.setPromptText("Identifiant du paquet");
 
-            hBox_button.setMaxWidth(200);
+            hBox_button.setMaxWidth(300);
             hBox_button.setAlignment(Pos.CENTER);
             hBox_button.setSpacing(20);
 
@@ -249,16 +292,15 @@ public class MainController implements Initializable {
                     identifiant_paquet_Textfield.setPromptText("Saisi invalide");
                 }
 
-                if (selected_house != null) {
+                if (houses_ComboBox.getValue() != null) {
                     carte_scrollpane.setStyle("-fx-background-color: white");
                     house_valid = true;
                 } else {
                     carte_scrollpane.setStyle("-fx-background-color: rgba(255,0,0,0.6)");
                 }
-
                 if (id_valid && house_valid) {
-                    JsonObject jsonObject = Json.createObjectBuilder().add("id_paquet", identifiant_paquet_Textfield.getText()).add("maison", selected_house).build();
-                    webService.setHttpRequest(ADDRESS, "croisement/", WebService.POST, jsonObject.toString(), TIMEOUT);
+                    JsonObject jsonObject = Json.createObjectBuilder().add("identifiant", identifiant_paquet_Textfield.getText()).add("id_maison", houses_ComboBox.getValue().getId_house()).build();
+                    webService.setHttpRequest(ADDRESS, "paquet/", WebService.POST, jsonObject.toString(), TIMEOUT);
 
                     main_TabPane.getTabs().remove(add_paquet_tab);
                     main_TabPane.getSelectionModel().selectFirst();
@@ -271,7 +313,7 @@ public class MainController implements Initializable {
             });
 
             //add
-            hBox_button.getChildren().addAll(ajouter_paquet_Button, annuler_paquet_Button);
+            hBox_button.getChildren().addAll(ajouter_paquet_Button, annuler_paquet_Button, houses_ComboBox);
             vBox.getChildren().addAll(identifiant_paquet_Textfield, hBox_button);
             vBox.setTranslateX(add_paquet_Anchorpane.getWidth() / 2);
             vBox.setTranslateY(add_paquet_Anchorpane.getHeight() / 2);

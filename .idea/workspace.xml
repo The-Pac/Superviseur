@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d7582d6-d1f7-4a26-9988-448bf305883f" name="Changes" comment="transfert">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/javax_json_processing_1_1_4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_javax_json_1_1_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_javax_json_1_0_4.xml" afterDir="false" />
+    <list default="true" id="8d7582d6-d1f7-4a26-9988-448bf305883f" name="Changes" comment="Version 0.4 (FX stable , connexion api stable):&#10;Correction bug carte&#10;Optimisation de composant&#10;Thread refait">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Superviseur.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Superviseur.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/json-20211205.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Data.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Delivery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Delivery.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/House.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/House.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Intersection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/superviseur/classe/Intersection.java" afterDir="false" />
@@ -23,9 +21,11 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/MainController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Delivery.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Delivery.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/House.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/House.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Intersection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Intersection.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Map.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Package.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Package.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Robot.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/Robot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/WebService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/classe/WebService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/superviseur/main_view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/superviseur/main_view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,7 +86,7 @@
     <property name="project.structure.proportion" value="0.15136719" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -166,7 +166,13 @@
       <workItem from="1649158728808" duration="12994000" />
       <workItem from="1649200212054" duration="364000" />
       <workItem from="1649200676148" duration="2125000" />
-      <workItem from="1649245187458" duration="5430000" />
+      <workItem from="1649245187458" duration="5694000" />
+      <workItem from="1649313312296" duration="9665000" />
+      <workItem from="1649333359060" duration="6306000" />
+      <workItem from="1649353225234" duration="212000" />
+      <workItem from="1649357591540" duration="5837000" />
+      <workItem from="1649363510160" duration="17385000" />
+      <workItem from="1649384003420" duration="383000" />
     </task>
     <task id="LOCAL-00001" summary="send">
       <created>1648793714421</created>
@@ -182,7 +188,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648806956775</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Version 0.4 (FX stable , connexion api stable):&#10;Correction bug carte&#10;Optimisation de composant&#10;Thread refait">
+      <created>1649257879690</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1649257879690</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,6 +227,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="send" />
     <MESSAGE value="transfert github" />
-    <option name="LAST_COMMIT_MESSAGE" value="transfert github" />
+    <MESSAGE value="Version 0.4 (FX stable , connexion api stable):&#10;Correction bug carte&#10;Optimisation de composant&#10;Thread refait" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 0.4 (FX stable , connexion api stable):&#10;Correction bug carte&#10;Optimisation de composant&#10;Thread refait" />
   </component>
 </project>

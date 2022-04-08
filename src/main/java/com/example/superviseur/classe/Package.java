@@ -1,36 +1,50 @@
 package com.example.superviseur.classe;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Package {
-    private StringProperty id, date;
+    private final StringProperty date;
+    private final StringProperty identifiant;
+    private final IntegerProperty id_paquet;
     private House house;
 
-    public Package() {
-    }
-
     /**
-     * @param id
+     * @param id_paquet
      * @param house
      * @param date
      */
-    public Package(String id, House house, String date) {
-        this.id = new SimpleStringProperty(this, "id", id);
+    public Package(int id_paquet, House house, String date, String identifiant) {
+        this.id_paquet = new SimpleIntegerProperty(this, "id_paquet", id_paquet);
+        this.identifiant = new SimpleStringProperty(this, "identifiant", identifiant);
         this.house = house;
         this.date = new SimpleStringProperty(this, "date", date);
     }
 
-    public String getId() {
-        return id.get();
+    public String getIdentifiant() {
+        return identifiant.get();
     }
 
-    public void setId(String id) {
-        this.id.set(id);
+    public void setIdentifiant(String identifiant) {
+        this.identifiant.set(identifiant);
     }
 
-    public StringProperty idProperty() {
-        return id;
+    public StringProperty identifiantProperty() {
+        return identifiant;
+    }
+
+    public int getId_paquet() {
+        return id_paquet.get();
+    }
+
+    public void setId_paquet(int id_paquet) {
+        this.id_paquet.set(id_paquet);
+    }
+
+    public IntegerProperty id_paquetProperty() {
+        return id_paquet;
     }
 
     public House getHouse() {

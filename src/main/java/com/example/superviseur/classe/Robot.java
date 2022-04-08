@@ -1,37 +1,45 @@
 package com.example.superviseur.classe;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Robot {
-    private final StringProperty id, statut;
+    private StringProperty statut, identifiant;
+    private IntegerProperty number_delivery;
     private int x, y;
 
 
     /**
      * Statut = "en course" || "pret" || "retour"
-     * @param id
+     *
+     * @param identifiant
      * @param statut
      * @param x
      * @param y
      */
-    public Robot(String id, String statut, int x, int y) {
-        this.id = new SimpleStringProperty(this, "id", id);
+    public Robot(String identifiant, String statut, int x, int y, int number_delivery) {
+        this.identifiant = new SimpleStringProperty(this, "identifiant", identifiant);
         this.statut = new SimpleStringProperty(this, "statut", statut);
         this.x = x;
         this.y = y;
+        this.number_delivery = new SimpleIntegerProperty(this, "number_delivery", number_delivery);
     }
 
-    public String getId() {
-        return id.get();
+    public Robot() {
     }
 
-    public void setId(String id) {
-        this.id.set(id);
+    public int getNumber_delivery() {
+        return number_delivery.get();
     }
 
-    public StringProperty idProperty() {
-        return id;
+    public void setNumber_delivery(int number_delivery) {
+        this.number_delivery.set(number_delivery);
+    }
+
+    public IntegerProperty number_deliveryProperty() {
+        return number_delivery;
     }
 
     public String getStatut() {
@@ -44,6 +52,18 @@ public class Robot {
 
     public StringProperty statutProperty() {
         return statut;
+    }
+
+    public String getIdentifiant() {
+        return identifiant.get();
+    }
+
+    public void setIdentifiant(String identifiant) {
+        this.identifiant.set(identifiant);
+    }
+
+    public StringProperty identifiantProperty() {
+        return identifiant;
     }
 
     public int getX() {

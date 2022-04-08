@@ -20,6 +20,9 @@
     -fx-background-color: #E9EFF2;
 }
 
+TableView .table-column {
+    -fx-alignment: CENTER;
+}
 
 .anchor_content {
     -fx-border-width: 3;

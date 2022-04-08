@@ -32,7 +32,7 @@ public class WebService {
      * @return String
      */
     public String setHttpRequest(String adresse, String url, String request_type, String data, int timemout_secondes) {
-        System.out.println("Request : " + request_type + " " + adresse + url + "\ndata:" + data);
+        System.out.println("\tRequest : " + request_type + " " + adresse + url + "\ndata:" + data);
         HttpRequest.Builder builder = HttpRequest.newBuilder();
         switch (request_type) {
             case GET:
@@ -50,11 +50,7 @@ public class WebService {
             default:
                 return adresse;
         }
-        HttpRequest httpRequest = builder
-                .uri(URI.create(adresse.concat(url)))
-                .timeout(Duration.ofSeconds(timemout_secondes))
-                .headers("Content-Type", "application/json")
-                .build();
+        HttpRequest httpRequest = builder.uri(URI.create(adresse.concat(url))).timeout(Duration.ofSeconds(timemout_secondes)).headers("Content-Type", "application/json").build();
 
         //async
         /*CompletableFuture<String> future_response = new CompletableFuture<>();
@@ -69,8 +65,13 @@ public class WebService {
         //sync
         try {
             HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.body());
-            return response.body();
+            System.out.println("Response:" + response.body() + "\n\n");
+            if (!response.body().equals("Internal Server Error")) {
+                return response.body();
+            } else {
+                return null;
+            }
+
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }

@@ -2,38 +2,43 @@ package com.example.superviseur.classe;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 public class House {
 
-    private final StringProperty id;
-    private final IntegerProperty number, x, y;
-
+    private final IntegerProperty id_house, number, id_croisement;
 
     /**
-     * @param id
+     * @param id_house
      * @param number
-     * @param x
-     * @param y
      */
-    public House(String id, int number, int x, int y) {
-        this.id = new SimpleStringProperty(this, "id", id);
+    public House(int id_house, int number, int id_croisement) {
+        this.id_house = new SimpleIntegerProperty(this, "id_house", id_house);
         this.number = new SimpleIntegerProperty(this, "number", number);
-        this.x = new SimpleIntegerProperty(this, "x", x);
-        this.y = new SimpleIntegerProperty(this, "y", y);
+        this.id_croisement = new SimpleIntegerProperty(this, "id_croisement", id_croisement);
     }
 
-    public String getId() {
-        return id.get();
+    public int getId_croisement() {
+        return id_croisement.get();
     }
 
-    public void setId(String id) {
-        this.id.set(id);
+    public void setId_croisement(int id_croisement) {
+        this.id_croisement.set(id_croisement);
     }
 
-    public StringProperty idProperty() {
-        return id;
+    public IntegerProperty id_croisementProperty() {
+        return id_croisement;
+    }
+
+    public int getId_house() {
+        return id_house.get();
+    }
+
+    public void setId_house(int id_house) {
+        this.id_house.set(id_house);
+    }
+
+    public IntegerProperty id_houseProperty() {
+        return id_house;
     }
 
     public int getNumber() {
@@ -46,29 +51,5 @@ public class House {
 
     public IntegerProperty numberProperty() {
         return number;
-    }
-
-    public int getX() {
-        return x.get();
-    }
-
-    public void setX(int x) {
-        this.x.set(x);
-    }
-
-    public IntegerProperty xProperty() {
-        return x;
-    }
-
-    public int getY() {
-        return y.get();
-    }
-
-    public void setY(int y) {
-        this.y.set(y);
-    }
-
-    public IntegerProperty yProperty() {
-        return y;
     }
 }
